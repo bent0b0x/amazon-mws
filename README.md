@@ -1,12 +1,12 @@
-# amazon-mws-node
+# amazon-mws
 Tiny library for interacting with the Amazon MWS API
 
 ## Installation
-`$ npm install amazon-mws-node`
+`$ npm install amazon-mws`
 
 ## Usage
 ```sh
-  var mws = require('amazon-mws-node')({
+  var mws = require('amazon-mws')({
     AmzSecretKey: 'AMZ_SECRET_KEY',
     AWSAccessKeyId: 'AMZ_ACCESS_KEY_ID'
   });
