@@ -1,0 +1,29 @@
+{
+  "name": "amazon-mws-node",
+  "version": "1.0.1",
+  "description": "Tiny library for interacting with the Amazon MWS API",
+  "main": "amazon.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bent0b0x/amazon-mws-node.git"
+  },
+  "keywords": [
+    "amazon",
+    "mws",
+    "node",
+    "api"
+  ],
+  "author": "Benjamin Baum",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bent0b0x/amazon-mws-node/issues"
+  },
+  "homepage": "https://github.com/bent0b0x/amazon-mws-node#readme",
+  "dependencies": {
+    "crypto-js": "^3.1.6",
+    "request": "^2.71.0"
+  }
+}
