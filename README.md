@@ -2,7 +2,7 @@
 Tiny library for interacting with the Amazon MWS API
 
 ## Installation
-`$ npm install amazon-mws-node``
+`$ npm install amazon-mws-node`
 
 ## Usage
 ```sh
