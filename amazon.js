@@ -1,4 +1,3 @@
-var path = require('path');
 var request = require('request');
 var HmacSHA256 = require('crypto-js/hmac-sha256');
 var base64 = require('crypto-js/enc-base64');
