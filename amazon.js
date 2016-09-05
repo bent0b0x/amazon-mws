@@ -21,7 +21,7 @@ var initializeAmazon = function (initOptions) {
       paramsArr.push([param, options.params[param]]);
     }
     paramsArr.sort(function (a, b) {
-      return a[0] > b[0];
+      return a[0] > b[0] ? 1 : -1;
     });
 
     var keys = [];
