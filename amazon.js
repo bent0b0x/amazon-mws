@@ -44,7 +44,7 @@ var initializeAmazon = function (initOptions) {
     var queryString = query.join('\n');
 
 
-    var hmac = HmacSHA256(queryString, initOptions.AmzSecretKey);
+    var hmac = HmacSHA256(queryString, options.AmzSecretKey || initOptions.AmzSecretKey);
     var signature = base64.stringify(hmac);
 
     paramsString += '&Signature=' + encodeURIComponent(signature);
