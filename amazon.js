@@ -1,6 +1,5 @@
-var path = require('path');
 var request = require('request');
-var HmacSHA256 = require('crypto-js/hmac-sha256');
+var hmacSHA256 = require('crypto-js/hmac-sha256');
 var base64 = require('crypto-js/enc-base64');
 
 var initializeAmazon = function (initOptions) {
@@ -16,12 +15,11 @@ var initializeAmazon = function (initOptions) {
     options.params.Timestamp = new Date().toISOString();
 
 
-    var paramsArr = [];
-    for (param in options.params) {
-      paramsArr.push([param, options.params[param]]);
-    }
+    var paramsArr = Object.keys(options.params).map(function (param) {
+      return [param, options.params[param]];
+    });
     paramsArr.sort(function (a, b) {
-      return a[0] > b[0];
+      return a[0] > b[0] ? 1 : -1;
     });
 
     var keys = [];
@@ -31,20 +29,15 @@ var initializeAmazon = function (initOptions) {
       vals.push(encodeURIComponent(tuple[1]));
     });
 
-    var paramsString = '';
-    keys.forEach(function (key, index) {
-      paramsString += key + '=' + vals[index];
-      if (index !== keys.length - 1) {
-        paramsString += '&';
-      }
-    });
+    var paramsString = keys.map(function (key, index) {
+      return key + '=' + vals[index];
+    }).join("&");
 
 
     var query = [method, options.base, options.endpoint, paramsString];
     var queryString = query.join('\n');
-
-
-    var hmac = HmacSHA256(queryString, options.AmzSecretKey || initOptions.AmzSecretKey);
+    
+    var hmac = hmacSHA256(queryString, options.AmzSecretKey || initOptions.AmzSecretKey);
     var signature = base64.stringify(hmac);
 
     paramsString += '&Signature=' + encodeURIComponent(signature);
@@ -54,7 +47,7 @@ var initializeAmazon = function (initOptions) {
     request[method.toLowerCase()](url, function (error, response, body) {
       options.callback && options.callback(error, response, body);
     });
-  }
+  };
 };
 
 module.exports = initializeAmazon;
