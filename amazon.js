@@ -2,6 +2,17 @@ var request = require('request');
 var hmacSHA256 = require('crypto-js/hmac-sha256');
 var base64 = require('crypto-js/enc-base64');
 
+function urlEncode(originalString) {
+  var encoded = originalString;
+  encoded = encodeURIComponent(encoded);
+  encoded = encoded.replace(/\*/g, '%2A');
+  encoded = encoded.replace(/\(/g, '%28');
+  encoded = encoded.replace(/\)/g, '%29');
+  encoded = encoded.replace(/'/g, '%27');
+  encoded = encoded.replace(/\!/g, '%21');
+  return encoded;
+}
+
 var initializeAmazon = function (initOptions) {
   return function (options) {
     var method = options.method || 'GET';
@@ -25,8 +36,8 @@ var initializeAmazon = function (initOptions) {
     var keys = [];
     var vals = [];
     paramsArr.forEach(function (tuple) {
-      keys.push(encodeURIComponent(tuple[0]));
-      vals.push(encodeURIComponent(tuple[1]));
+      keys.push(urlEncode(tuple[0]));
+      vals.push(urlEncode(tuple[1]));
     });
 
     var paramsString = keys.map(function (key, index) {
@@ -36,11 +47,11 @@ var initializeAmazon = function (initOptions) {
 
     var query = [method, options.base, options.endpoint, paramsString];
     var queryString = query.join('\n');
-    
+
     var hmac = hmacSHA256(queryString, options.AmzSecretKey || initOptions.AmzSecretKey);
     var signature = base64.stringify(hmac);
 
-    paramsString += '&Signature=' + encodeURIComponent(signature);
+    paramsString += '&Signature=' + urlEncode(signature);
 
     url += '?' + paramsString;
 
